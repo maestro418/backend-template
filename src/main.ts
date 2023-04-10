@@ -37,20 +37,20 @@ const connectDatabase = async (mongoUrl: string) => {
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({origin: "*", methods: ["POST", "GET"]}));
+app.use(cors({ origin: "*", methods: ["POST", "GET"] }));
 app.use(limiter)
 app.use(express.json());
 
 // Frontend Render
 if (!config.debug) {
-    app.use(express.static(__dirname + "/build"));
-    app.get("/*", function (req, res) {
-        res.sendFile(__dirname + "/build/index.html", function (err) {
-            if (err) {
-                res.status(500).send(err);
-            }
-        });
-    });
+	app.use(express.static(__dirname + "/build"));
+	app.get("/*", function (req, res) {
+		res.sendFile(__dirname + "/build/index.html", function (err) {
+			if (err) {
+				res.status(500).send(err);
+			}
+		});
+	});
 }
 
 // API Router
@@ -59,9 +59,9 @@ app.use("/api", router);
 
 
 connectDatabase(config.DATABASE).then(() => {
-    app.listen(config.PORT, () => {
-        setlog(`Server listening on ${config.PORT} port`);
-    });
+	app.listen(config.PORT, () => {
+		setlog(`Server listening on ${config.PORT} port`);
+	});
 }).catch((err: any) => {
-    setlog(err);
+	setlog(err);
 });
