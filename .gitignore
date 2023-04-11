@@ -8,6 +8,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 yarn.lock
+package-lock.json
 build
 
 node_modules/
