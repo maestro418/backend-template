@@ -12,7 +12,7 @@ const UserSchema = new Schema({
 	},
 	address: {
 		type: String,
-		default: '', 
+		default: '',
 	},
 	lasttime: {
 		type: Number,
@@ -24,5 +24,8 @@ const UserSchema = new Schema({
 	}
 });
 
-
 export const USER = mongoose.model("users", UserSchema);
+
+export default {
+	USER
+};

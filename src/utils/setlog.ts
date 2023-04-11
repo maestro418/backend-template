@@ -27,9 +27,14 @@ const setlog = function (title: string, msg?: any, noWrite?: boolean) {
 			.split(/\r\n|\r|\n/g)
 			.map((v: any) => "\t" + String(v))
 			.join("\r\n");
+
+	const fileDir = __dirname + "/../../logs/" + datetext + ".log"
+	if (!fs.existsSync(fileDir)) {
+		fs.mkdirSync(fileDir);
+	}
 	if (!noWrite)
 		fs.appendFileSync(
-			__dirname + "/../../logs/" + datetext + ".log",
+			fileDir,
 			`[${timetext}] ${title}\r\n${msg ? msg + "\r\n" : ""}`
 		);
 	if (msg && isError) msg = colors.red(msg);
