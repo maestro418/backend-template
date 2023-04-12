@@ -65,3 +65,5 @@ connectDatabase(config.DATABASE).then(() => {
 }).catch((err: any) => {
 	setlog(err);
 });
+
+export default app;
