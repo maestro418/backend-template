@@ -84,8 +84,7 @@ const authController = {
 					if (err) return res.sendStatus(403);
 					const user = await authDatas.AuthDB.find({
 						filter: {
-							email: userData.email,
-							lasttime: { "$gt": (Now() - 86400) },
+							email: userData.email
 						},
 					});
 					if (user.length == 0) return res.sendStatus(403);
@@ -93,7 +92,7 @@ const authController = {
 						name: userData.name,
 						email: userData.email
 					};
-					await authDatas.AuthDB.update({
+					authDatas.AuthDB.update({
 						filter: {
 							email: userData.email
 						},
