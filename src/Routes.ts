@@ -1,11 +1,11 @@
 import express from "express";
-import { controllers as UserController } from "./auth";
+import Auth from "./auth";
 
 const Routes = async (router: express.Router) => {
 
 	//user
-	router.post("/signup/register", UserController.signup);
-	router.post("/login", UserController.login);
+	router.post("/signup/register", Auth.controllers.signup);
+	router.post("/login", Auth.controllers.login);
 
 };
 

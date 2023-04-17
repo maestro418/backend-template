@@ -1,15 +1,11 @@
-import controllers from "./controllers/user.controllers"
-import services from "./services/user.services"
-import models from "./models/user.model"
+import controllers from "./controllers"
+import services from "./services"
+import models from "./models"
 
-export {
+const Auth = {
     controllers,
     services,
     models
 }
 
-export default {
-    controllers,
-    services,
-    models
-}
+export default Auth;
