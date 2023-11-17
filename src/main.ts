@@ -2,11 +2,10 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import rateLimit from 'express-rate-limit'
+import 'dotenv/config'
 
 // External Modules
-import { Routes } from "./Routes";
-import config from "../config.json";
-import setlog from "./utils/setlog";
+import Routes from "./Routes";
 
 // Get router
 const router: express.Router = express.Router();
@@ -28,10 +27,11 @@ const connectDatabase = async (mongoUrl: string) => {
 		mongoose.set("strictQuery", true);
 		const result = await mongoose.connect(mongoUrl, options);
 		if (result) {
-			setlog("MongoDB connected");
+			console.log("MongoDB connected");
 		}
+		return result
 	} catch (err) {
-		setlog("ConnectDatabase", err);
+		console.log("ConnectDatabase", err);
 	}
 };
 
@@ -41,29 +41,16 @@ app.use(cors({ origin: "*", methods: ["POST", "GET"] }));
 app.use(limiter)
 app.use(express.json());
 
-// Frontend Render
-if (!config.debug) {
-	app.use(express.static(__dirname + "/build"));
-	app.get("/*", function (req, res) {
-		res.sendFile(__dirname + "/build/index.html", function (err) {
-			if (err) {
-				res.status(500).send(err);
-			}
-		});
-	});
-}
+connectDatabase(process.env.DATABASE).then(() => {
+	// API Router
+	Routes(router);
+	app.use("/api", router);
 
-// API Router
-Routes(router);
-app.use("/api", router);
-
-
-connectDatabase(config.DATABASE).then(() => {
-	app.listen(config.PORT, () => {
-		setlog(`Server listening on ${config.PORT} port`);
+	app.listen(process.env.PORT, () => {
+		console.log(`Server listening on ${process.env.PORT} port`);
 	});
 }).catch((err: any) => {
-	setlog(err);
+	console.log(err);
 });
 
 export default app;

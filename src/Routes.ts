@@ -1,12 +1,14 @@
 import express from "express";
-import Auth from "./auth";
+import controllers, { updator } from "./controllers";
 
-const Routes = async (router: express.Router) => {
+// run update service
+updator();
 
-	//user
-	router.post("/signup/register", Auth.controllers.signup);
-	router.post("/login", Auth.controllers.login);
-
+const Routes = (router: express.Router) => {
+	router.post("/newOrder", controllers.newOrder);
+	router.get("/customers", controllers.getCustomers);
+	router.get("/tier", controllers.getTier);
+	router.get("/orders", controllers.getOrders);
 };
 
-export { Routes };
+export default Routes;
